@@ -8,6 +8,9 @@ class StoreProxy extends Store {
 
     public StoreProxy(DbEngine engine) {
         this.engine = engine;
+        engine.readItems((id, name, count, price) -> {
+            this.items.add(new ItemProxy(engine, id, name, count, price));
+        });
     }
 
     @Override

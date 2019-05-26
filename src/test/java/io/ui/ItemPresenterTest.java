@@ -1,6 +1,5 @@
 package io.ui;
 
-import io.db.DbGateway;
 import io.domain.Item;
 import io.domain.Store;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,6 @@ public class ItemPresenterTest {
         when(view.getCount()).thenReturn("200");
         when(view.getPrice()).thenReturn("2");
         ItemPresenter presenter = new ItemPresenter(view);
-        DbGateway db = mock(DbGateway.class);
         presenter.initializeEdit(item);
         presenter.confirm();
         assertThat(item).hasData("item2", 200, 2);
@@ -49,7 +47,6 @@ public class ItemPresenterTest {
         when(view.getPrice()).thenReturn("1");
         ItemPresenter presenter = new ItemPresenter(view);
         Store store = new Store();
-        DbGateway db = mock(DbGateway.class);
         presenter.initializeAdd(store);
         presenter.confirm();
         assertThat(store.items()).hasSize(1);
