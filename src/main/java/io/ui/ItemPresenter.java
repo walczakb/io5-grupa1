@@ -12,7 +12,9 @@ public class ItemPresenter {
     private final ItemView view;
     private ConfirmAction confirmAction;
 
-    public ItemPresenter(ItemView view) { this.view = view; }
+    public ItemPresenter(ItemView view) {
+        this.view = view;
+    }
 
     public void initializeEdit(Item item, DbGateway db) {
         confirmAction = (name, count, price) -> {
@@ -26,8 +28,7 @@ public class ItemPresenter {
 
     public void initializeAdd(Store store, DbGateway db) {
         confirmAction = (name, count, price) -> {
-            Item item = new Item(name, count, price);
-            store.addItem(item);
+            Item item = store.addItem(name, count, price);
             db.addItem(item);
         };
         view.open("", "", "");
@@ -40,5 +41,7 @@ public class ItemPresenter {
         view.close();
     }
 
-    public void cancel() { view.close(); }
+    public void cancel() {
+        view.close();
+    }
 }
