@@ -14,4 +14,10 @@ class StoreProxy extends Store {
     protected Item createItem(String name, int count, int price) {
         return new ItemProxy(name, count, price, this.dbEngine);
     }
+
+    Item restoreItem(int id, String name, int count, int price){
+        Item item = new ItemProxy(id, name, count, price, this.dbEngine);
+        items.add(item);
+        return item;
+    }
 }

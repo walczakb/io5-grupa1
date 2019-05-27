@@ -14,10 +14,8 @@ public class Database implements DbGateway {
     }
 
     public Store loadStore() {
-        Store store = new StoreProxy(dbEngine);
-        dbEngine.readItems((id, name, count, price) -> {
-            Item item = store.addItem(name, count, price);
-        });
+        StoreProxy store = new StoreProxy(dbEngine);
+        dbEngine.readItems(store::restoreItem);
         return store;
     }
 }

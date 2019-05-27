@@ -14,14 +14,14 @@ public class ItemPresenter {
     public ItemPresenter(ItemView view) { this.view = view; }
 
     public void initializeEdit(Item item) {
-        confirmAction = item::update;
+        confirmAction = (name, count, price) -> item.update(name, count, price);
         view.open(item.name(),
                 String.valueOf(item.count()),
                 String.valueOf(item.price()));
     }
 
     public void initializeAdd(Store store) {
-        confirmAction = store::addItem;
+        confirmAction = (name, count, price) -> store.addItem(name, count, price);
         view.open("", "", "");
     }
 

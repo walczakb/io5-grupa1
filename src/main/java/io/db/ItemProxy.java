@@ -12,6 +12,12 @@ class ItemProxy extends Item {
         id = dbEngine.insertItem(name(), count(), price());
     }
 
+    ItemProxy(int id, String name, int count, int price, DbEngine dbEngine) {
+        super(name, count, price);
+        this.dbEngine = dbEngine;
+        this.id = id;
+    }
+
     @Override
     public void update(String name, int count, int price){
         dbEngine.updateItem(id, name, count, price);
