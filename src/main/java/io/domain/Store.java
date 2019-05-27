@@ -20,9 +20,13 @@ public class Store {
 
     public Item addItem(String name, int count, int price) {
         Item item = createItem(name, count, price);
+        addItem(item);
+        return item;
+    }
+
+    protected void addItem(Item item) {
         items.add(item);
         for (Observer observer : observers) observer.notifyAdd(item);
-        return item;
     }
 
     protected Item createItem(String name, int count, int price) {
