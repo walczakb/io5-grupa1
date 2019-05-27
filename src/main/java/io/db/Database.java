@@ -7,28 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Database implements DbGateway {
-    private final DbEngine engine;
-    private Map<Item, Integer> ids;
+    final private DbEngine dbEngine;
 
-    public Database(DbEngine engine) { this.engine = engine; }
+    public Database(DbEngine dbEngine){
+        this.dbEngine = dbEngine;
+    }
 
     public Store loadStore() {
-        Store store = new Store();
-        ids = new HashMap<>();
-        engine.readItems((id, name, count, price) -> {
+        Store store = new StoreProxy(dbEngine);
+        dbEngine.readItems((id, name, count, price) -> {
             Item item = store.addItem(name, count, price);
-            ids.put(item, id);
         });
         return store;
-    }
-
-    public void addItem(Item item) {
-        int id = engine.insertItem(item.name(), item.count(), item.price());
-        ids.put(item, id);
-    }
-
-    public void updateItem(Item item) {
-        int id = ids.get(item);
-        engine.updateItem(id, item.name(), item.count(), item.price());
     }
 }

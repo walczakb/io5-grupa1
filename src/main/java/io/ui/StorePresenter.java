@@ -31,9 +31,11 @@ public class StorePresenter {
     }
 
     public void initialize() {
-        for (Item item : store.items()) view.addItem(itemDescription(item));
+        for (Item item : store.items())
+            view.addItem(itemDescription(item));
         view.open();
-        for (Item item : store.items()) item.addObserver(itemObserver);
+        for (Item item : store.items())
+            item.addObserver(itemObserver);
         store.addObserver(storeObserver);
     }
 
@@ -47,7 +49,8 @@ public class StorePresenter {
 
     public void close() {
         store.removeObserver(storeObserver);
-        for (Item item : store.items()) item.removeObserver(itemObserver);
+        for (Item item : store.items())
+            item.removeObserver(itemObserver);
         view.close();
     }
 }

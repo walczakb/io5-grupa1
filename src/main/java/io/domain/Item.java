@@ -31,6 +31,7 @@ public class Item {
         this.name = name;
         this.count = count;
         this.price = price;
-        for (Observer observer : observers) observer.notifyUpdate(this);
+        for (Observer observer : observers)
+            observer.notifyUpdate(this);
     }
 }
