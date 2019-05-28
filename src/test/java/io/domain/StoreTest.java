@@ -14,12 +14,10 @@ public class StoreTest {
 
     @Test
     public void testAdd() {
-        Item item1 = new Item("item1", 100, 1);
-        Item item2 = new Item("item2", 200, 2);
         Store store = new Store();
-        store.addItem(item1);
-        store.addItem(item2);
-        assertThat(store.items()).containsExactly(item1, item2);
+        store.addItem("item1", 100, 1);
+        store.addItem("item2", 200, 2);
+        assertThat(store.items()).containsExactly(store.items().get(0), store.items().get(1));
     }
 
     @Test
@@ -27,11 +25,10 @@ public class StoreTest {
         Store store = new Store();
         Store.Observer observer = mock(Store.Observer.class);
         store.addObserver(observer);
-        Item item1 = new Item("item1", 100, 1);
-        store.addItem(item1);
+        store.addItem("item1", 100, 1);
         store.removeObserver(observer);
-        store.addItem(new Item("item2", 200, 2));
-        verify(observer, times(1)).notifyAdd(item1);
+        store.addItem("item2", 200, 2);
+        verify(observer, times(1)).notifyAdd(store.items().get(0));
         verifyNoMoreInteractions(observer);
     }
 }
