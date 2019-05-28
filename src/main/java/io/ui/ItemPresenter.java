@@ -1,6 +1,5 @@
 package io.ui;
 
-import io.db.DbGateway;
 import io.domain.Item;
 import io.domain.Store;
 
@@ -12,24 +11,19 @@ public class ItemPresenter {
     private final ItemView view;
     private ConfirmAction confirmAction;
 
-    public ItemPresenter(ItemView view) { this.view = view; }
+    public ItemPresenter(ItemView view) {
+        this.view = view;
+    }
 
-    public void initializeEdit(Item item, DbGateway db) {
-        confirmAction = (name, count, price) -> {
-            item.update(name, count, price);
-            db.updateItem(item);
-        };
+    public void initializeEdit(Item item) {
+        confirmAction = item::update;
         view.open(item.name(),
                 String.valueOf(item.count()),
                 String.valueOf(item.price()));
     }
 
-    public void initializeAdd(Store store, DbGateway db) {
-        confirmAction = (name, count, price) -> {
-            Item item = new Item(name, count, price);
-            store.addItem(item);
-            db.addItem(item);
-        };
+    public void initializeAdd(Store store) {
+        confirmAction = store::addItem;
         view.open("", "", "");
     }
 
@@ -40,5 +34,7 @@ public class ItemPresenter {
         view.close();
     }
 
-    public void cancel() { view.close(); }
+    public void cancel() {
+        view.close();
+    }
 }
