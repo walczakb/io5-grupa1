@@ -9,6 +9,10 @@ public class Store {
         void notifyAdd(Item item);
     }
 
+    protected Item createItem(String name, int count, int price) {
+        return new Item(name, count, price);
+    }
+
     private List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer) { observers.add(observer); }
@@ -18,8 +22,13 @@ public class Store {
 
     public List<Item> items() { return Collections.unmodifiableList(items); }
 
-    public void addItem(Item item) {
+    protected void addItem(Item item) {
         items.add(item);
         for (Observer observer : observers) observer.notifyAdd(item);
+    }
+
+    public void addItem(String name, int count, int price) {
+        Item item = createItem(name, count, price);
+        addItem(item);
     }
 }
