@@ -16,8 +16,5 @@ class StoreProxy extends Store{
         return item;
     }
 
-//    public void addItem(int id, String name, int count, int price) {
-//        Item item = new ItemProxy(name, count, price, id);
-//    }
 }
 
