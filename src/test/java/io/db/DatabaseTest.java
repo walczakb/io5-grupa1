@@ -1,6 +1,7 @@
 package io.db;
 
 import io.domain.Item;
+import io.domain.Store;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -37,20 +38,17 @@ public class DatabaseTest {
         Database db = new Database(engine);
         Item item = db.loadStore().items().get(0);
         item.update("item2", 200, 2);
-        db.updateItem(item);
         verify(engine).updateItem(101, "item2", 200, 2);
     }
 
     @Test
     public void testInsertAndUpdateItem() {
-        Item item = new Item("item1", 100, 1);
         DbEngine engine = mock(DbEngine.class);
         when(engine.insertItem("item1", 100, 1)).thenReturn(101);
         Database db = new Database(engine);
-        db.loadStore();
-        db.addItem(item);
+        Store store = db.loadStore();
+        Item item = store.addItem("item1", 100, 1);
         item.update("item2", 200, 2);
-        db.updateItem(item);
         verify(engine).updateItem(101, "item2", 200, 2);
     }
 }
