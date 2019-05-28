@@ -8,14 +8,14 @@ public class Item {
         void notifyUpdate(Item item);
     }
 
-    private List<Observer> observers = new ArrayList<>();
+    protected List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer) { observers.add(observer); }
     public void removeObserver(Observer observer) { observers.remove(observer); }
 
-    private String name;
-    private int count;
-    private int price;
+    protected String name;
+    protected int count;
+    protected int price;
 
     public Item(String name, int count, int price) {
         this.name = name;
