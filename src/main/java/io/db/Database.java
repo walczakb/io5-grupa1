@@ -6,30 +6,10 @@ import io.domain.Store;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Database implements DbGateway {
-    private final DbEngine engine;
-    private Map<Item, Integer> ids;
+public class Database {
 
-    public Database(DbEngine engine) { this.engine = engine; }
-
-    public Store loadStore() {
-        Store store = new Store();
-        ids = new HashMap<>();
-        engine.readItems((id, name, count, price) -> {
-            Item item = new Item(name, count, price);
-            store.addItem(item);
-            ids.put(item, id);
-        });
+    static public Store loadStore(DbEngine engine) {
+        Store store = new StoreProxy(engine);
         return store;
-    }
-
-    public void addItem(Item item) {
-        int id = engine.insertItem(item.name(), item.count(), item.price());
-        ids.put(item, id);
-    }
-
-    public void updateItem(Item item) {
-        int id = ids.get(item);
-        engine.updateItem(id, item.name(), item.count(), item.price());
     }
 }
